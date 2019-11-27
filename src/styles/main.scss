@@ -1,0 +1,51 @@
+@import "./shared/fonts";
+@import "./shared//colors";
+
+// PAGES
+@import "./index";
+@import "./portfolios";
+
+//Header
+@import "./header";
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-family: "Montserrat", "Helvetica";
+}
+
+.clickable {
+  cursor: pointer;
+}
+.self-typed {
+  font-size: 31px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: white;
+}
+.error {
+  font-weight: 700;
+  color: red;
+}
+
+.absolute {
+  position: absolute !important;
+}
+
+// --------- BASE PAGE -------------
+.base-page {
+  padding: 150px 0 100px 0;
+  color: black;
+  background-color: #ecedee;
+  min-height: 100vh;
+
+  .page-header {
+    .page-header-title {
+      font-weight: 700;
+      color: black;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+  }
+}
