@@ -5,12 +5,13 @@ import jwt from 'jsonwebtoken'
 
 import { getCookieFromReq } from '../helpers/utils'
 
+const CLIENT_ID = process.env.CLIENT_ID
 class Auth0 {
     constructor() {
         // this.auth0 = new auth0.WebAuth({
         //     domain: 'goodlythink.auth0.com',
-        //     clientID: 'otQ1movcHE3TxqvWQ5XaSgLA6GwIzEmN',
-        //     redirectUri: 'http://localhost:300',
+        //     clientID: CLIENT_ID,
+        //     redirectUri: `${process.env.BASE_URL}/callback`,
         //     responseType: 'token id_token',
         //     scope: 'openid'
         // })
@@ -33,24 +34,22 @@ class Auth0 {
     setSession() {
         // const expiresAt = 600000 + new Date().getTime();
         const expiresAt = 3600000 + new Date().getTime();
-        const ruleUrl = "http://localhost:3000/role";
+        const ruleUrl = process.env.NAMESPACE + "/role";
 
+        console.log(ruleUrl);
         const jwtData = jwt.sign({
-            "http://localhost:3000/role": "siteOwner",
+            [ruleUrl]: "siteOwner",
             exp: expiresAt,
             data: 'goodlythink',
-            name: "ART"
+            name: "ART",
+            sub: "001"
         }, 'art');
 
-        Cookies.set('user', '1234');
         Cookies.set('jwt', jwtData);
-        Cookies.set('expiresAt', expiresAt);
     }
 
     logout() {
-        Cookies.remove('user');
         Cookies.remove('jwt');
-        Cookies.remove('expiresAt');
         Router.push('/')
     }
 

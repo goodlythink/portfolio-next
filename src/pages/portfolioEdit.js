@@ -4,28 +4,38 @@ import BasePage from '../components/Basepage'
 import PortfolioCreateForm from '../components/portfolios/PortfolioCreateForm'
 
 import { Row, Col } from 'reactstrap';
+
+import { updatePortfolio, getPortfolioById } from '../../actions'
+
 import withAuth from '../components/hoc/withAuth'
-
-import { createPortfolio } from '../../actions'
 import { Router } from '../../routes'
-import moment from 'moment';
 
-const INITIAL_VALUES = { title: '', company: '', location: '', position: '', description: '', startDate: moment(), endDate: moment() }
-class PortfolioNew extends React.Component {
-    constructor(props) {
-        super();
+class PortfolioEdit extends React.Component {
+    static async getInitialProps({ query }) {
+        let portfolio = {};
 
-        this.savePortfolio = this.savePortfolio.bind(this)
-        this.state = { error: undefined }
+        try {
+            portfolio = await getPortfolioById(query.id);
+        } catch (error) {
+            console.error(error);
+        }
+
+        // console.log(portfolio);
+        return { portfolio }
     }
 
-    savePortfolio(portfolioData, { setSubmitting }) {
+    constructor(props) {
+        super();
+        this.state = { error: undefined }
+
+        this.updatePortfolio = this.updatePortfolio.bind(this)
+    }
+
+    updatePortfolio(portfolioData, { setSubmitting }) {
         setSubmitting(true);
 
-        // alert(JSON.stringify(portfolioData, null, 2));
-        createPortfolio(portfolioData)
+        updatePortfolio(portfolioData)
             .then((portfolio) => {
-                // console.log(portfolio);
                 setSubmitting(false);
                 this.setState({ error: undefined })
                 Router.pushRoute('/portfolios')
@@ -37,14 +47,16 @@ class PortfolioNew extends React.Component {
                 console.error(err)
             })
     }
+
     render() {
         const { error } = this.state
+        const { portfolio } = this.props
         return (
             <BaseLayout {...this.props.auth}>
-                <BasePage className="portfolio-create-page" title="Create New Portfolio">
+                <BasePage className="portfolio-create-page" title="Update Portfolio">
                     <Row>
                         <Col md="6">
-                            <PortfolioCreateForm initialValues={INITIAL_VALUES} error={error} onSubmit={this.savePortfolio} />
+                            <PortfolioCreateForm initialValues={portfolio} error={error} onSubmit={this.updatePortfolio} />
                         </Col>
                     </Row>
                 </BasePage>
@@ -53,4 +65,4 @@ class PortfolioNew extends React.Component {
     }
 }
 
-export default withAuth('siteOwner')(PortfolioNew)
+export default withAuth('siteOwner')(PortfolioEdit)

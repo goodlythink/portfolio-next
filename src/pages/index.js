@@ -2,7 +2,6 @@ import React from 'react'
 import Typed from 'react-typed';
 import BaseLayout from '../components/layouts/BaseLayout'
 
-import axios from 'axios'
 import { Container, Row, Col } from 'reactstrap'
 
 class Index extends React.Component {
@@ -15,8 +14,9 @@ class Index extends React.Component {
     render() {
         const { isAuthenticated, user } = this.props.auth
         // console.log(this.props.auth)
+        // console.log(process.env.NODE_ENV)
         return (
-            <BaseLayout className="cover"  {...this.props.auth} headerType="index">
+            <BaseLayout className="cover"  {...this.props.auth} headerType="index" title="เว็บ next.JS">
                 <div className="main-section">
                     <div className="background-image">
                         <img src="/static/images/background-index.png" />
@@ -71,7 +71,7 @@ class Index extends React.Component {
                         </Row>
                     </Container>
                 </div>
-            </BaseLayout>
+            </BaseLayout >
         )
     }
 }

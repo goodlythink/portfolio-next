@@ -6,13 +6,6 @@ import '../styles/main.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import auth0 from '../../services/auth0'
 
-// function MyApp({ Component, pageProps, ctx }) {
-//     // const isAuthenticated = process.browser ? auth0clientAuth() : auth0.serverAuth();
-//     console.log(ctx);
-//     return <Component {...pageProps} />
-// }
-
-// export default MyApp
 
 export default class MyApp extends App {
     static async getInitialProps({ Component, router, ctx }) {
@@ -23,11 +16,9 @@ export default class MyApp extends App {
             pageProps = await Component.getInitialProps(ctx)
         }
 
-        // let isAuthenticated = false;
-        // if (user) {
-        //     isAuthenticated = true;
-        // }
-        const auth = { user, isAuthenticated: !!user }
+        const isSiteOwner = user && user[process.env.NAMESPACE + '/role'] === 'siteOwner'
+        const auth = { user, isAuthenticated: !!user, isSiteOwner }
+
         return { pageProps, auth }
     }
 

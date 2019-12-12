@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server/index.js",
     "build": "next build",
-    "start": "NODE_ENV=production node server/index.js"
+    "start": "cross-env NODE_ENV=production node server/index.js",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +17,13 @@
     "@zeit/next-sass": "^1.0.1",
     "auth0-js": "^9.11.3",
     "axios": "^0.19.0",
+    "babel-plugin-transform-define": "^2.0.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
+    "cross-env": "^6.0.3",
     "express": "^4.17.1",
     "formik": "^2.0.6",
+    "immutable": "^4.0.0-rc.12",
     "js-cookie": "^2.2.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
@@ -32,6 +37,8 @@
     "react-datepicker": "^1.8.0",
     "react-dom": "^16.12.0",
     "react-typed": "^1.2.0",
-    "reactstrap": "^8.1.1"
+    "reactstrap": "^8.1.1",
+    "slate": "^0.44.6",
+    "slate-react": "^0.21.12"
   }
 }

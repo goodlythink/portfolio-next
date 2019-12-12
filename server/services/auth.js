@@ -2,8 +2,6 @@ const ExtractJwt = require("passport-jwt").ExtractJwt;
 const JwtStrategy = require("passport-jwt").Strategy;
 const passport = require("passport");
 
-const namespace = 'http://localhost:3000/'
-
 const jwtOptions = {
     jwtFromRequest: ExtractJwt.fromHeader("authorization"),
     secretOrKey: "art"
@@ -20,19 +18,9 @@ exports.checkJWT = passport.authenticate("jwt", { session: false })
 exports.checkRole = role => (req, res, next) => {
     const user = req.user;
 
-    if (user && user[namespace + 'role'] == role) {
+    if (user && user[process.env.NAMESPACE + '/role'] == role) {
         next();
     } else {
         return res.status(401).send({ title: 'Not Authorized', detail: 'You are not authorized to access this data' })
     }
 }
-
-// MIDDLEWARE
-// exports.checkJWT = function (req, res, next) {
-//     const isValidToken = true;
-//     if (isValidToken) {
-//         next();
-//     } else {
-//         return res.status(400).send({ title: 'Not Authrized', detail: 'Please login in order to get a data' })
-//     }
-// }

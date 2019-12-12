@@ -6,9 +6,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 
 export default class PortDate extends React.Component {
-  state = {
-    dateValue: moment()
-  };
+  constructor(props) {
+    super(props);
+
+    const dateValue = props.initialDate ? moment(props.initialDate) : moment();
+    const isHidden = props.initialDate ? false : true;
+
+    this.state = {
+      dateValue,
+      isHidden
+    }
+  }
 
   setFieldValueAndTouched(date, touched) {
     const { setFieldValue, setFieldTouched } = this.props.form;
@@ -20,8 +28,7 @@ export default class PortDate extends React.Component {
   }
   handleChange = date => {
     this.setState({
-      dateValue: date,
-      isHidden: false
+      dateValue: date
     });
     this.setFieldValueAndTouched(date, true)
   };
