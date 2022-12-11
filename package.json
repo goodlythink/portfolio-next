@@ -21,7 +21,7 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
     "cross-env": "^6.0.3",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "formik": "^2.0.6",
     "immutable": "^4.0.0-rc.12",
     "js-cookie": "^2.2.1",
